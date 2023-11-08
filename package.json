@@ -1,0 +1,6 @@
+{
+  "dependencies": {
+    "node": "^21.1.0",
+    "node-gyp": "^10.0.1"
+  }
+}
