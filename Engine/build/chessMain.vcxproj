@@ -11,7 +11,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{0B4A6EA3-458D-07E3-418B-CD0811E46146}</ProjectGuid>
+    <ProjectGuid>{90459017-EDC4-4DD4-8621-B20654776546}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
     <RootNamespace>chessMain</RootNamespace>
     <IgnoreWarnCompileDuplicatedFilename>true</IgnoreWarnCompileDuplicatedFilename>
@@ -137,6 +137,9 @@
     <None Include="..\binding.gyp"/>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\chessMain.cpp">
+      <ObjectFileName>$(IntDir)\chessMain.obj</ObjectFileName>
+    </ClCompile>
     <ClCompile Include="C:\Users\andra\AppData\Roaming\npm\node_modules\node-gyp\src\win_delay_load_hook.cc"/>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets"/>

@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
+    <Filter Include="..">
+      <UniqueIdentifier>{739DB09A-CC57-A953-A6CF-F64FA08E4FA7}</UniqueIdentifier>
+    </Filter>
     <Filter Include="C:">
       <UniqueIdentifier>{7B735499-E5DD-1C2B-6C26-70023832A1CF}</UniqueIdentifier>
     </Filter>
@@ -33,6 +36,9 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\chessMain.cpp">
+      <Filter>..</Filter>
+    </ClCompile>
     <ClCompile Include="C:\Users\andra\AppData\Roaming\npm\node_modules\node-gyp\src\win_delay_load_hook.cc">
       <Filter>C:\Users\andra\AppData\Roaming\npm\node_modules\node-gyp\src</Filter>
     </ClCompile>
