@@ -2,6 +2,7 @@
 #include <node.h>
 #include <string>
 #include <iostream>	
+#include "chessBoard.cpp"
 
 void bufferToString(char buffer[64], size_t size, std::string& position){
 	position = "";
@@ -29,6 +30,9 @@ napi_value Find(napi_env env, napi_callback_info info){
 
 	std::string position;
 	bufferToString(buffer, copiedSize, position);
+
+	chessBoard chessBoard("rnbqkbnrpppppppp00000000000000000000000000000000PPPPPPPPRNBQKBNR");
+	chessBoard.printBoard();
 	
 	std::cout << "Native: ";	//Troubleshooting code
 	std::cout << position << std::endl; //Troubleshooting code
