@@ -1,3 +1,11 @@
 const chessMainCPP = require("./build/release/chessMain");
 
-console.log("NodeJS: "+chessMainCPP("00B0r0000000P00000000000000000b000000P00qP00K000000000000000000R"));
+const boardState = ["00B0r000",
+                    "0000P000",
+                    "00000000",
+                    "000000b0",
+                    "q0000P00",
+                    "q000K000",
+                    "q0000000",
+                    "000000bR"]
+console.log("NodeJS: "+chessMainCPP(boardState.join("")));

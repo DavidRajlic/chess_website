@@ -35,6 +35,7 @@ napi_value Find(napi_env env, napi_callback_info info){
 	chessBoard.printBoard();
 	std::cout << chessBoard.findPiece('K') << std::endl;
 	std::cout << chessBoard.checkCheck(chessBoard.findPiece('K')) << std::endl;
+	std::cout << chessBoard.checkCheckmate(chessBoard.findPiece('K')) << std::endl;
 	std::cout << "Native: ";	//Troubleshooting code
 	std::cout << position << std::endl; //Troubleshooting code
 	

@@ -11,6 +11,7 @@ public:
     void printBoard();
 	int findPiece(char piece);
 	bool checkCheck(int pos);
+	bool checkCheckmate(int pos);
 };
 
 chessBoard::chessBoard(/* args */)
@@ -50,12 +51,14 @@ bool chessBoard::checkCheck(int pos){ //Function to check if king is under check
 	char rook;
 	char bishop;
 	char queen;
+	char king;
 	if(board[pos] == 'K'){
 		pawn = 'p';
 		knight = 'n';
 		rook = 'r';
 		bishop = 'b';
 		queen = 'q';
+		king = 'k';
 	}
 	if(board[pos] == 'k'){
 		pawn = 'P';
@@ -63,6 +66,7 @@ bool chessBoard::checkCheck(int pos){ //Function to check if king is under check
 		rook = 'R';
 		bishop = 'B';
 		queen = 'Q';
+		king = 'K';
 	}
 
 	bool leftRow = false;
@@ -102,6 +106,8 @@ bool chessBoard::checkCheck(int pos){ //Function to check if king is under check
 				horizontalBlocked = true;
 		}
 		if((offset == 7 || offset == 9) && board[i] == 'P' && board[pos] == 'k')
+			return true;
+		if((offset == 1 || offset == 7 || offset == 8 || offset == 9) && board[i] == king)
 			return true;
 		if(i + 1 % 8 == 0)
 			leftRow = true;
@@ -145,10 +151,23 @@ bool chessBoard::checkCheck(int pos){ //Function to check if king is under check
 		}
 		if((offset == 7 || offset == 9) && board[i] == 'p' && board[pos] == 'K')
 			return true;
+		if((offset == 1 || offset == 7 || offset == 8 || offset == 9) && board[i] == king)
+			return true;
 		if(i % 8 == 0)
 			leftRow = true;
 		if(diagonalFallingBlocked && diagonalRisingBlocked && verticalBlocked && horizontalBlocked)
 			break;
 	}
 	return false;
+}
+
+bool chessBoard::checkCheckmate(int pos){
+	bool foundSafe = false;
+	int kingMoves[9] = {0, -9, -8, -7, -1, 1, 7, 8, 9};
+	for(int i : kingMoves){
+		int nextpos = pos + i;
+		if(!checkCheck(nextpos))
+			foundSafe = true;
+	}
+	return !foundSafe;
 }
