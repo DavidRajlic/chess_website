@@ -24,16 +24,17 @@ napi_value Find(napi_env env, napi_callback_info info){
 		napi_throw(env, err_info);
 	}
 
-	char buffer[64];	//obtains information about passed parameters
+	char buffer[65];	//obtains information about passed parameters
 	size_t copiedSize;
 	napi_get_value_string_utf8(env, args[0], buffer, sizeof(buffer), &copiedSize); 
 
 	std::string position;
 	bufferToString(buffer, copiedSize, position);
 
-	chessBoard chessBoard("rnbqkbnrpppppppp00000000000000000000000000000000PPPPPPPPRNBQKBNR");
+	chessBoard chessBoard(position);
 	chessBoard.printBoard();
-	
+	std::cout << chessBoard.findPiece('K') << std::endl;
+	std::cout << chessBoard.checkCheck(chessBoard.findPiece('K')) << std::endl;
 	std::cout << "Native: ";	//Troubleshooting code
 	std::cout << position << std::endl; //Troubleshooting code
 	
