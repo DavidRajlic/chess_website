@@ -5,7 +5,7 @@
             "sources":  [
                 "chessMain.cpp",
                 "chessBoard.cpp",
-                "Engine.cpp"
+                "engine.cpp"
             ]
         }
     ]
