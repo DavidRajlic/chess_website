@@ -3,7 +3,9 @@
         {
             "target_name": "chessMain",
             "sources":  [
-                "chessMain.cpp"
+                "chessMain.cpp",
+                "chessBoard.cpp",
+                "Engine.cpp"
             ]
         }
     ]

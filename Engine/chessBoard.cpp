@@ -1,19 +1,7 @@
 #include <iostream>
 #include <string>
-class chessBoard
-{
-private:
-    std::string board;
-public:
-    chessBoard();
-    chessBoard(std::string board) : board(board){};
-    ~chessBoard();
-    void printBoard();
-	int findPiece(char piece);
-	bool checkCheck(int pos);
-	bool checkCheckmate(int pos);
-};
-
+#include "chessBoard.h"
+#include "Engine.h"
 chessBoard::chessBoard(/* args */)
 {
 }
@@ -38,7 +26,7 @@ void chessBoard::printBoard() {
 }
 
 int chessBoard::findPiece(char piece){ //will be used mainly for locating kings
-	for(int i = 0; i < board.length(); i++){ //iterate over all pieces
+	for(int i = 0; i < 64; i++){ //iterate over all pieces
 		if(board[i] == piece)
 			return i;	//return index
 	}
@@ -75,7 +63,7 @@ bool chessBoard::checkCheck(int pos){ //Function to check if king is under check
 	bool horizontalBlocked = false;
 	bool verticalBlocked = false;
 
-	for(int i = pos + 1; i < board.length(); i++){ //checks in positive direction
+	for(int i = pos + 1; i < 64; i++){ //checks in positive direction
 		int offset = i - pos;
 		//checks for knights
 		if((offset == 6 || offset == 10 || offset == 15 || offset == 17) && board[i] == knight){

@@ -2,8 +2,7 @@
 #include <node.h>
 #include <string>
 #include <iostream>	
-#include "chessBoard.cpp"
-
+#include "chessBoard.h"
 void bufferToString(char buffer[64], size_t size, std::string& position){
 	position = "";
 	for(int i = 0; i < size; i++){
