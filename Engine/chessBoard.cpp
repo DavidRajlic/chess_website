@@ -25,6 +25,23 @@ void chessBoard::printBoard() {
 	std::cout << std::endl;
 }
 
+void chessBoard::printBoard(int i)
+{
+	std::string prefix = "";
+	for (int j = 0; j < i; j++)
+		prefix += "	";
+	for (int i = 0; i < 64; i += 8) {
+		std::cout << prefix << 8 - (i / 8) << " ";
+		for (int j = 0; j < 8; j++)
+			std::cout  << board[i + j] << " ";
+		std::cout << std::endl;
+	}
+	std::cout << prefix << "  ";
+	for (char c = 'A'; c < 'I'; c++)
+		std::cout << c << " ";
+	std::cout << std::endl;
+}
+
 int chessBoard::findPiece(char piece) { //will be used mainly for locating kings
 	for (int i = 0; i < board.length(); i++) { //iterate over all pieces
 		if (board[i] == piece)
