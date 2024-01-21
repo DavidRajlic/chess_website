@@ -6,8 +6,11 @@ import { GameProvider } from './context/GameContext';
 function App() {
 	return (
 		<GameProvider>
+			<button>
+				Activate Bot
+			</button>
 			<Game />
-		</GameProvider>
+		</GameProvider>	
 	);
 }
 

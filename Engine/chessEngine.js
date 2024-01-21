@@ -15,7 +15,9 @@ boardS = boardState.join("");
 
 function getMove(player, depth, board){
     arg = player + depth + board;
-    return chessMainCPP(arg);
+    toReturn = chessMainCPP(arg);
+    toReturn = toReturn.slice(0, -1)
+    return toReturn;
 }
 
 console.log("NodeJS: "+ getMove("0", "1", boardS));
