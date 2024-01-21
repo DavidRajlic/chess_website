@@ -8,4 +8,4 @@ const boardState = ["00B0r000",
                     "q000K000",
                     "q0000000",
                     "000000bR"]
-console.log("NodeJS: "+chessMainCPP(boardState.join(""), 1));
+console.log("NodeJS: "+chessMainCPP(boardState.join("") "1"));
