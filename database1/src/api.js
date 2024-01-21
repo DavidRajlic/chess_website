@@ -20,9 +20,11 @@ export const login = async (userData) => {
     }
 };
 
-export const profile = async () => {
+export const profile = async (username) => {
     try {
-        const response = await axios.get(`${API_URL}/profile`);
+        const response = await axios.get(
+            `${API_URL}/profile?username=${username}`
+        );
         return response.data;
     } catch (error) {
         throw error.response.data;

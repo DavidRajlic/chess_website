@@ -1,13 +1,43 @@
 import "../App.css";
 import "bootstrap/dist/css/bootstrap.css";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router";
 import Avatar from "@mui/material/Avatar";
+import { profile } from "../api";
+import {
+    AreaChart,
+    Area,
+    XAxis,
+    YAxis,
+    CartesianGrid,
+    Tooltip,
+    ResponsiveContainer,
+} from "recharts";
 
 function Profile() {
     const location = useLocation();
     const navigate = useNavigate();
     const [message, setMessage] = useState("");
+    const [user, setUser] = useState({});
+    const [ranks, setRanks] = useState([{ rank: 0, date: "" }]);
+
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const response = await profile(location.state.username);
+                const { message, user } = response;
+                if (message === "Profile found") {
+                    setUser(user);
+                    setRanks(user.ranks);
+                } else {
+                    setMessage("Profile not found");
+                }
+            } catch (error) {
+                setMessage(`Profile failed: ${error.message}`);
+            }
+        };
+        fetchData();
+    });
 
     function stringAvatar(name: string) {
         return {
@@ -97,7 +127,35 @@ function Profile() {
                     <div className="avatar">
                         <Avatar {...stringAvatar(location.state.username)} />
                     </div>
-                    <h2>{location.state.username}</h2>
+                    <h2>{user.username}</h2>
+                    <h2>Trenutni rank: {ranks[ranks.length - 1].rank}</h2>
+                    <ResponsiveContainer width="100%" height="50%">
+                        <AreaChart
+                            width={500}
+                            height={400}
+                            data={ranks}
+                            margin={{
+                                top: 10,
+                                right: 30,
+                                left: 0,
+                                bottom: 0,
+                            }}
+                        >
+                            <CartesianGrid strokeDasharray="3 3" />
+                            <XAxis dataKey="date" />
+                            <YAxis />
+                            <Tooltip />
+                            <Area
+                                type="monotone"
+                                dataKey="rank"
+                                stroke="#B3B5BD"
+                                fill="#5F8CDD"
+                            />
+                        </AreaChart>
+                    </ResponsiveContainer>
+                    <h2>Zmage: {user.wins}</h2>
+                    <h2>Porazi: {user.losses}</h2>
+                    <h2>Neodločeno: {user.draws}</h2>
                     <button onClick={handleBack}> Nazaj </button>
                     <button onClick={handleLogout}> Odjava </button>
                     <button onClick={handleUsernameChange}>

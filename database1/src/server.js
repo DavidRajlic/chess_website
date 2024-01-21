@@ -19,6 +19,15 @@ mongoose.connect(
 const userSchema = new mongoose.Schema({
     username: String,
     password: String,
+    wins: Number,
+    losses: Number,
+    draws: Number,
+    ranks: [
+        {
+            rank: Number,
+            date: String,
+        },
+    ],
 });
 
 const User = mongoose.model("Users", userSchema);
@@ -27,7 +36,19 @@ app.post("/signup", async (req, res) => {
     try {
         const { username, password } = req.body;
         const hashedPassword = await bcrypt.hash(password, 10);
-        const newUser = new User({ username, password: hashedPassword });
+        const newUser = new User({
+            username,
+            password: hashedPassword,
+            wins: 0,
+            losses: 0,
+            draws: 0,
+            ranks: [
+                {
+                    rank: 0,
+                    date: new Date().toISOString().slice(0, 10),
+                },
+            ],
+        });
         await newUser.save();
         res.status(201).json({ message: "User created successfully" });
     } catch (error) {
@@ -53,9 +74,10 @@ app.post("/login", async (req, res) => {
 
 app.get("/profile", async (req, res) => {
     try {
-        const username = req.body.username;
-        if (username) {
-            res.status(200).json({ message: "Profile found", username });
+        const { username } = req.query;
+        const user = await User.findOne({ username });
+        if (user) {
+            res.status(200).json({ message: "Profile found", user });
         } else {
             res.status(404).json({ message: "Profile not found" });
         }
