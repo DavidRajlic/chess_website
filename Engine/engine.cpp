@@ -47,7 +47,7 @@ void engine::generateAllMoves(std::string& in, Player player, int depth)
 
 void engine::generateAllMovesAux(std::string& in, Player player, int depth, int currentDepth, std::vector <Move*>& moves)
 {
-	std::cout << currentDepth << std::endl;
+	//std::cout << currentDepth << std::endl;
 	getMovePair(in, player, moves);
 	std::string boardTemp;
 	std::string boardTempInner;
@@ -430,7 +430,7 @@ void engine::getAvgWeight(Move* move, int depth)
 
 Move* engine::bestMove()
 {
-	std::cout << "Finding best move: ";
+	//std::cout << "Finding best move: ";
 	for (Move* move : moveList) {
 		getAvgWeight(move, 1);
 	}
@@ -444,7 +444,7 @@ Move* engine::bestMove()
 			toReturn = m;
 		}
 	}
-	std::cout << std::endl << bestWeight << std::endl;
+	//std::cout << std::endl << bestWeight << std::endl;
 	return toReturn;
 }
 
@@ -471,4 +471,24 @@ std::vector<Move*> engine::best5Moves()
 	return result;
 }
 
+
+void engine::cleanUp()
+{
+	for (Move* m : moveList) {
+		cleanUpRecursively(m->nextMoves);
+	}
+	for (Move* m : moveList) {
+		delete m;
+	}
+}
+
+void engine::cleanUpRecursively(std::vector<Move*> nextMoves)
+{
+	for (Move* m : nextMoves) {
+		cleanUpRecursively(m->nextMoves);
+	}
+	for (Move* m : nextMoves) {
+		delete m;
+	}
+}
 

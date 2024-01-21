@@ -54,4 +54,6 @@ public:
     void getAvgWeight(Move* move, int depth);
     Move* bestMove();
     std::vector <Move*> best5Moves();
+    void cleanUp();
+    void cleanUpRecursively(std::vector <Move*> nextMoves);
 };
