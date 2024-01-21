@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
 import './cell-styles.css';
-import { isLightSquare, Cell as BoardCell } from '../../functions';
+import { isLightSquare, Cell as BoardCell } from '../../functions/';
 import Piece from '../piece';
 import { GameContext } from '../../context/GameContext';
 
