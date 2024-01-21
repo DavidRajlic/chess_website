@@ -2,7 +2,8 @@
 #include <node.h>
 #include <string>
 #include <iostream>	
-#include "chessBoard.cpp"
+#include "chessBoard.h"
+#include "engine.h"
 
 void bufferToString(char buffer[64], size_t size, std::string& position){
 	position = "";
@@ -17,9 +18,9 @@ napi_value Find(napi_env env, napi_callback_info info){
 	napi_value output;
 	napi_get_cb_info(env, info, &argc, args, NULL, NULL); //Retrieves arguments about the function call from node application
 	
-	if(argc > 1){ //Checks argument count and throws error if incorrect
+	if(argc != 2){ //Checks argument count and throws error if incorrect
 		napi_value err_info;
-		char* err_txt = "To many arguments";
+		char* err_txt = "Err: argc";
 		napi_create_string_utf8(env, err_txt, sizeof(err_txt), &err_info);
 		napi_throw(env, err_info);
 	}
@@ -38,7 +39,8 @@ napi_value Find(napi_env env, napi_callback_info info){
 	std::cout << chessBoard.checkCheckmate(chessBoard.findPiece('K')) << std::endl;
 	std::cout << "Native: ";	//Troubleshooting code
 	std::cout << position << std::endl; //Troubleshooting code
-	
+
+
 	napi_create_string_utf8(env, buffer, copiedSize, &output); //building the string to return
 	return output;
 }
