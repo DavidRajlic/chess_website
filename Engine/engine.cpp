@@ -3,6 +3,7 @@
 #include "Player.h"
 #include "Weight.h"
 #include "chessBoard.h"
+#include <algorithm>
 bool engine::onEdge(int pos)
 {
 	if (pos % 8 == 0 || (pos + 1) % 8 == 0) {
@@ -46,10 +47,12 @@ void engine::generateAllMoves(std::string& in, Player player, int depth)
 
 void engine::generateAllMovesAux(std::string& in, Player player, int depth, int currentDepth, std::vector <Move*>& moves)
 {
-
+	std::cout << currentDepth << std::endl;
 	getMovePair(in, player, moves);
 	std::string boardTemp;
 	std::string boardTempInner;
+	if (depth == currentDepth)
+		return;
 	for (Move* m : moves) {
 		boardTemp = in;
 		boardTemp[m->end] = boardTemp[m->start];
@@ -65,6 +68,7 @@ void engine::generateAllMovesAux(std::string& in, Player player, int depth, int 
 			boardTempInner = boardTemp;
 			boardTempInner[m2->end] = boardTempInner[m2->start];
 			boardTempInner[m2->start] = '0';
+			generateAllMovesAux(boardTempInner, player, depth, currentDepth + 1, m2->nextMoves);
 #ifdef DEBUG2
 			std::cout << "Depth 2 player 2: " << m2->start << " " << m2->end << std::endl;
 			chessBoard cb2(boardTempInner);
@@ -368,6 +372,7 @@ void engine::makeMove(std::string &in, int pos, int newPos, std::vector <Move*> 
 		weight = (int)Weight::queen;
 	else
 		weight = 0;
+	weight += squareWeights[newPos / 8][newPos % 8] - squareWeights[pos / 8][pos % 8];
 	moves.push_back(new Move(pos, newPos, weight));
 	movesGenerated++;
 }
@@ -377,25 +382,93 @@ void engine::makeMove(std::string &in, int pos, int newPos, std::vector <Move*> 
 void engine::printMoves()
 {
 	for (Move* m : moveList) {
-		std::cout << m->start << " " << m->end << " " << (m->moveWeight != '0' ? m->moveWeight : '/') << std::endl;
-		for (Move* nm : m->nextMoves) {
-			std::cout << "	" << nm->start << " " << nm->end << " " << (nm->moveWeight != '0' ? nm->moveWeight : '/') << std::endl;
+		std::cout << m->start << " " << m->end << " " << m->moveWeight << std::endl;
+		if (!m->nextMoves.empty()) {
+			printMovesRecursively(m->nextMoves, 1);
 		}
 	}
 }
 
+void engine::printMovesRecursively(std::vector<Move*> moveArr, int offset)
+{
+	std::string prefix = "";
+	for (int i = 0; i < offset; i++) {
+		prefix = prefix + "	";
+	}
+
+	for (Move* m : moveArr) {
+		std::cout << prefix << m->start << " " << m->end << " " <<	m->moveWeight << std::endl;
+		if (!m->nextMoves.empty()) {
+			printMovesRecursively(m->nextMoves, offset + 1);
+		}
+	}
+}
+
+float adjust(float val, int depth) {
+	int prefix = 1;
+	if (depth % 2 == 0)
+		prefix = -1;
+	return prefix * val;
+	return val;
+}
+
+void engine::getAvgWeight(Move* move, int depth)
+{
+	if (move->nextMoves.empty()) {
+		move->avgWeight = adjust(move->moveWeight, depth);
+		return;
+	}
+	float sumAllMoves = 0;
+	for (Move* m : move->nextMoves) {
+		getAvgWeight(m, depth + 1);
+		sumAllMoves += m->avgWeight;
+	}
+	move->avgWeight = move->moveWeight + adjust(float(sumAllMoves / move->nextMoves.size()), depth);
+}
+
+
+
 Move* engine::bestMove()
 {
 	std::cout << "Finding best move: ";
-	int bestWeight = 0;
+	for (Move* move : moveList) {
+		getAvgWeight(move, 1);
+	}
+
+	float bestWeight = 0;
 	Move* toReturn = nullptr;
 	for (Move* m : moveList) {
-		if (m->moveWeight + squareWeights[m->end / 8][m->end % 8] >= bestWeight)
+		if (m->avgWeight >= bestWeight)
 		{
-			bestWeight = m->moveWeight + squareWeights[m->end / 8][m->end % 8];
+			bestWeight = m->avgWeight;
 			toReturn = m;
 		}
 	}
 	std::cout << std::endl << bestWeight << std::endl;
 	return toReturn;
 }
+
+bool compareMoves(const Move* move1, const Move* move2) {
+	return move1->avgWeight > move2->avgWeight;
+}
+
+std::vector<Move*> engine::best5Moves()
+{
+
+	std::vector<Move*> result;
+
+	if (moveList.size() < 5) {
+		return moveList;
+	}
+
+	std::vector<Move*> sortedVector = moveList;
+	std::sort(sortedVector.begin(), sortedVector.end(), compareMoves);
+
+	for (int i = 0; i < 5; ++i) {
+		result.push_back(sortedVector[i]);
+	}
+
+	return result;
+}
+
+

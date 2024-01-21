@@ -6,8 +6,9 @@ struct Move {
     int start;
     int end;
     int moveWeight;
+    float avgWeight;
     std::vector <Move*> nextMoves;
-    Move(int start, int end, int moveWeight) : start(start), end(end), moveWeight(moveWeight) {}
+    Move(int start, int end, int moveWeight) : start(start), end(end), moveWeight(moveWeight), avgWeight(0) {}
 };
 class engine
 {
@@ -49,5 +50,8 @@ public:
     void makeMove(std::string &in, int pos, int newPos, std::vector <Move*> &moves);
     //return functions
     void printMoves();
+    void printMovesRecursively(std::vector <Move*> nextMoves, int offset);
+    void getAvgWeight(Move* move, int depth);
     Move* bestMove();
+    std::vector <Move*> best5Moves();
 };
