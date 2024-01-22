@@ -16,7 +16,6 @@ boardS = boardState.join("");
 function getMove(player, depth, board){
     arg = player + depth + board;
     toReturn = chessMainCPP(arg);
-    toReturn = toReturn.slice(0, -1)
     return toReturn;
 }
 
