@@ -52,6 +52,7 @@ napi_value Find(napi_env env, napi_callback_info info){
 	engine eng;
 	eng.generateAllMoves(position, (0 ? Player::white : Player::black), depth);
 	Move* best = eng.bestMove();
+	eng.cleanUp();
 
 	position[best->end] = position[best->start];
 	position[best->start] = '0';
