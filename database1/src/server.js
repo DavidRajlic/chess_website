@@ -57,6 +57,7 @@ app.post("/signup", async (req, res) => {
             ],
         });
         await newUser.save();
+        req.session.user = newUser;
         res.status(201).json({ message: "User created successfully" });
     } catch (error) {
         res.status(500).json({ error: error.message });

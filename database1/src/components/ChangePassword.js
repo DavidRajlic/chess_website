@@ -2,7 +2,7 @@ import "../App.css";
 import "bootstrap/dist/css/bootstrap.css";
 import React, { useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
-import { changePassword } from "../api";
+import { changePassword, logout } from "../api";
 
 function ChangePassword() {
     const [newPassword, setNewPassword] = useState("");
@@ -15,6 +15,7 @@ function ChangePassword() {
         try {
             await changePassword(location.state.username, newPassword);
             setMessage("Changing password successful");
+            await logout();
             navigate("/");
         } catch (error) {
             setMessage(`Changing password failed: ${error.message}`);

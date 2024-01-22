@@ -2,7 +2,7 @@ import "../App.css";
 import "bootstrap/dist/css/bootstrap.css";
 import React, { useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
-import { changeUsername } from "../api";
+import { changeUsername, logout } from "../api";
 
 function ChangeUsername() {
     const [newUsername, setNewUsername] = useState("");
@@ -15,6 +15,7 @@ function ChangeUsername() {
         try {
             await changeUsername(location.state.username, newUsername);
             setMessage("Changing username successful");
+            await logout();
             navigate("/");
         } catch (error) {
             setMessage(`Changing username failed: ${error.message}`);
