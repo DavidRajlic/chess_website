@@ -35,7 +35,6 @@ napi_value Find(napi_env env, napi_callback_info info){
 
 	std::string position;
 	bufferToString(buffer, copiedSize, position);
-
 	
 	int player = std::stoi(position.substr(0,1));
 	int depth = std::stoi(position.substr(1, 1));
@@ -60,7 +59,7 @@ napi_value Find(napi_env env, napi_callback_info info){
 	char bufferOut[64];
 	stringToCharArray(position, bufferOut);
 
-	napi_create_string_utf8(env, bufferOut, copiedSize, &output); //building the string to return
+	napi_create_string_utf8(env, bufferOut, sizeof(bufferOut), &output); //building the string to return
 	return output;
 }
 
