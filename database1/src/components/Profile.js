@@ -3,7 +3,7 @@ import "bootstrap/dist/css/bootstrap.css";
 import React, { useState, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router";
 import Avatar from "@mui/material/Avatar";
-import { profile } from "../api";
+import { profile, logout } from "../api";
 import {
     AreaChart,
     Area,
@@ -76,6 +76,7 @@ function Profile() {
 
     const handleLogout = async () => {
         try {
+            await logout();
             navigate("/");
             setMessage("Logout successful");
         } catch (error) {

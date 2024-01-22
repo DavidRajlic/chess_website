@@ -55,11 +55,11 @@ export const changePassword = async (username, newPassword) => {
     }
 };
 
-// export const logout = async () => {
-//     try {
-//         const response = await axios.post(`${API_URL}/logout`);
-//         return response.data;
-//     } catch (error) {
-//         throw error.response.data;
-//     }
-// };
+export const logout = async () => {
+    try {
+        const response = await axios.get(`${API_URL}/logout`);
+        return response.data;
+    } catch (error) {
+        throw error.response.data;
+    }
+};

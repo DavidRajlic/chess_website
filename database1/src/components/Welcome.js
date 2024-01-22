@@ -2,6 +2,7 @@ import "../App.css";
 import "bootstrap/dist/css/bootstrap.css";
 import React, { useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
+import { logout } from "../api";
 
 function Welcome() {
     const navigate = useNavigate();
@@ -21,6 +22,7 @@ function Welcome() {
 
     const handleLogout = async () => {
         try {
+            await logout();
             navigate("/");
             setMessage("Logout successful");
         } catch (error) {

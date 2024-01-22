@@ -3,7 +3,7 @@ const mongoose = require("mongoose");
 const bcrypt = require("bcrypt");
 const cors = require("cors");
 const dotenv = require("dotenv");
-
+const session = require("express-session");
 dotenv.config();
 
 const app = express();
@@ -11,6 +11,13 @@ const PORT = process.env.PORT || 8080;
 
 app.use(express.json());
 app.use(cors());
+app.use(
+    session({
+        secret: "618b594c4aaf674a1eb8f8a17a6bbc53b710fe10afd314605fac8634d0aea503",
+        resave: false,
+        saveUninitialized: true,
+    })
+);
 
 mongoose.connect(
     "mongodb+srv://davidbujic:david4520326@cluster0.23b0l6h.mongodb.net/Website"
@@ -61,6 +68,8 @@ app.post("/login", async (req, res) => {
         const { username, password } = req.body;
         const user = await User.findOne({ username });
         if (user && (await bcrypt.compare(password, user.password))) {
+            req.session.user = user;
+            console.log(req.session);
             res.status(200).json({
                 message: "Login successful",
             });
@@ -114,6 +123,16 @@ app.put("/change_password", async (req, res) => {
     } catch (error) {
         res.status(500).json({ error: error.message });
     }
+});
+
+app.get("/logout", (req, res) => {
+    req.session.destroy((err) => {
+        if (err) {
+            res.status(500).json({ error: "Failed to logout" });
+        } else {
+            res.status(200).json({ message: "Logout successful" });
+        }
+    });
 });
 
 app.listen(PORT, () => {
