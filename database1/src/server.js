@@ -69,7 +69,6 @@ app.post("/login", async (req, res) => {
         const user = await User.findOne({ username });
         if (user && (await bcrypt.compare(password, user.password))) {
             req.session.user = user;
-            console.log(req.session);
             res.status(200).json({
                 message: "Login successful",
             });
