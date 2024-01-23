@@ -1,0 +1,27 @@
+.board {
+	padding: 1rem;
+	margin: 1.5rem auto; /** centered */
+	border-radius: 12px;
+	box-shadow: 0 0 5px 5px green;
+	width: 45%;
+	height: calc(100vh * 0.85);
+	display: grid;
+	grid-template-columns: repeat(8, 1fr);
+	background-color: burlywood;
+}
+
+
+.board1 {
+	padding: 1rem;
+	margin: 1.5rem auto; /** centered */
+	border-radius: 12px;
+	box-shadow: 0 0 5px 5px green;
+	width: 45%;
+	height: calc(100vh * 0.85);
+	display: grid;
+	grid-template-columns: repeat(8, 1fr);
+	background-color: burlywood;
+	transform: rotate(180deg);
+
+
+}

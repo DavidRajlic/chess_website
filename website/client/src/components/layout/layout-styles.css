@@ -24,19 +24,23 @@
 .app-title:hover {
 	animation: glow 1.5s infinite ease-in-out;
 }
+.flex {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	justify-content: center;
+}
 
 .bg-img {
 	height: 100vh;
 	flex: 0.5;
-	width: 2vw;
+	width: 60vw;
 }
 
 .content {
-	display: flex;
 	flex: 0.5;
 	padding: 1.5rem;
 	text-align: center;
-	margin-top: 20%;
 	display: flex;
 	align-items: center;
 	justify-content: center;

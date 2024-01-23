@@ -19,18 +19,18 @@ const Cell = ({ cell, index, makeMove, setFromPos }) => {
 	};
 
 	const handleDrop = () => makeMove(cell.pos);
-
+	const isPort3000 = window.location.port === '3000';
 	return (
-		<div
-			className={`cell ${light ? 'light' : 'dark'}`}
-			onDrop={handleDrop}
-			onDragOver={(e) => e.preventDefault()}
-		>
-			<div
-				className={`overlay ${isPossibleMove && 'possible-move'} ${
-					inCheck() && 'check'
-				}`}
-			>
+	  <div
+        className={`cell ${light ? 'light' : 'dark'} ${isPort3000 ? 'cell' : 'cell1'}`}
+            onDrop={handleDrop}
+            onDragOver={(e) => e.preventDefault()}
+        >
+			 <div
+                className={`overlay ${isPossibleMove && 'possible-move'} ${
+                    inCheck() && 'check'
+                } `}
+            >
 				<Piece pos={cell.pos} name={cell.piece} setFromPos={setFromPos} />
 			</div>
 		</div>

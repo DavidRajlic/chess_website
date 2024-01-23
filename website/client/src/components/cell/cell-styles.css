@@ -3,6 +3,15 @@
 	height: calc((100vh * 0.85) / 9.4);
 	padding: 0.25rem 0.35rem;
 	position: relative;
+
+}
+
+.cell1 {
+	width: calc((100vh * 0.9) / 9.6);
+	height: calc((100vh * 0.85) / 9.4);
+	padding: 0.25rem 0.35rem;
+	position: relative;
+	transform: rotate(180deg);
 }
 .overlay {
 	position: absolute;
@@ -31,7 +40,12 @@
 	margin-left: 40%;
 	margin-top: 35%;
 }
-
 .check {
-	background-color: #ff0000;
+	background-image: linear-gradient(
+		to right,
+		#f66f88 0%,
+		#ee5574 19%,
+		#f8444d 60%,
+		#eb7b6a 100%
+	);
 }
