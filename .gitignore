@@ -2,5 +2,3 @@ node_modules/**
 .vscode/**
 Engine/build/**
 node_modules
-website/client/.DS_Store
-website/client/node_modules/.DS_Store
