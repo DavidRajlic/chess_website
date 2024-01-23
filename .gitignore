@@ -2,3 +2,4 @@ node_modules/**
 .vscode/**
 Engine/build/**
 node_modules
+.DS_Store
